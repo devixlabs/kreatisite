@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "kratisite"
+version = "0.1.0"
+description = "KratiSite command line application"
+authors = ["DevixLabs <info@devixlabs.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+argparse = "^1.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+kratisite = "kratisite.cli:main"

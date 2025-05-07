@@ -3,36 +3,46 @@
 import argparse
 import subprocess
 import sys
+# Enforce minimum Python version
+if sys.version_info < (3, 9):
+    print("Error: KratiSite requires Python 3.9 or above.", file=sys.stderr)
+    sys.exit(1)
 
 
 def check_domain_availability(domain_name):
     """Check domain availability using AWS Route53.
-    
+
     Args:
         domain_name: The domain name to check.
-        
+
     Returns:
         The output from the AWS CLI command.
     """
-    cmd = ["aws", "route53domains", "check-domain-availability", "--domain-name", domain_name]
-    
+    cmd = [
+        "aws",
+        "route53domains",
+        "check-domain-availability",
+        "--domain-name",
+        domain_name,
+    ]
+
     try:
         result = subprocess.run(
             cmd,
             capture_output=True,
             text=True,
-            check=False
+            check=False,
         )
-        
+
         # Print the stdout result
         if result.stdout:
             print(result.stdout.strip())
-            
+
         # Signal to the user if there was an error
         if result.stderr:
             print(f"Error: {result.stderr.strip()}", file=sys.stderr)
             return 1
-        
+
         return 0
     except Exception as e:
         print(f"Error executing AWS command: {str(e)}", file=sys.stderr)
@@ -51,16 +61,19 @@ def main():
     subparsers = parser.add_subparsers(dest="command", help="Commands")
 
     # Add the help command
-    help_parser = subparsers.add_parser("help", help="Display detailed help information")
-    
+    subparsers.add_parser(
+        "help",
+        help="Display detailed help information",
+    )
+
     # Add the check-domain command
     check_domain_parser = subparsers.add_parser(
-        "check-domain", 
-        help="Check domain availability using AWS Route53"
+        "check-domain",
+        help="Check domain availability using AWS Route53",
     )
     check_domain_parser.add_argument(
-        "domain_name", 
-        help="Domain name to check (e.g., example.com)"
+        "domain_name",
+        help="Domain name to check (e.g., example.com)",
     )
 
     # Parse arguments
@@ -83,7 +96,8 @@ KratiSite Command Line Application
 
 DESCRIPTION
 -----------
-KratiSite is a powerful command line tool designed to help you manage your tasks.
+KratiSite is a powerful command line tool designed to help you manage
+your tasks.
 
 USAGE
 -----
@@ -104,7 +118,8 @@ kratisite check-domain example.com
 
 NOTES
 -----
-This is an initial version of the application. More features will be added in the future.
+This is an initial version of the application.
+More features will be added in the future.
 """
     print(help_text)
 

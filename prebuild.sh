@@ -3,13 +3,13 @@ set -e
 
 echo "Running pre-build checks..."
 
-# Run all checks
-poetry run check
+# Run pre-commit checks on all files
+echo "Running pre-commit checks..."
+poetry run pre-commit run --all-files || { echo "Pre-commit checks failed. Please fix issues before building."; exit 1; }
 
-if [ $? -eq 0 ]; then
-    echo "All checks passed! Building package..."
-    poetry build
-else
-    echo "Checks failed. Please fix issues before building."
-    exit 1
-fi
+# Run additional checks
+echo "Running additional checks..."
+poetry run check || { echo "Checks failed. Please fix issues before building."; exit 1; }
+
+echo "All checks passed! Building package..."
+poetry build

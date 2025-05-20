@@ -1,6 +1,6 @@
 # KreatiSite
 
-A command line application with Poetry dependency management.
+A command line application with Poetry dependency management and pre-commit hooks.
 
 ## Installation
 
@@ -27,4 +27,48 @@ poetry shell
 
 # Now you can run the application directly
 kreatisite help
+
+# Set up pre-commit hooks (do this once)
+poetry run setup-hooks
+
+# Run linting
+poetry run lint
+
+# Run tests
+poetry run test
+
+# Run all checks (linting + tests)
+poetry run check
+```
+
+## Build
+
+The project includes a pre-build script that runs all checks before building:
+
+```bash
+./prebuild.sh
+```
+
+This will:
+1. Run pre-commit hooks on all files
+2. Run tests and additional checks
+3. Build the package if all checks pass
+
+## Pre-commit Hooks
+
+This project uses pre-commit to enforce code quality. The following hooks are configured:
+
+- Trailing whitespace trimming
+- End of file fixing
+- YAML and TOML syntax checking
+- Large file detection
+- Flake8 (with docstring checking)
+- isort (import sorting)
+- mypy (type checking)
+- pytest (automated tests)
+
+These checks run automatically on commit, but you can also run them manually:
+
+```bash
+poetry run pre-commit run --all-files
 ```

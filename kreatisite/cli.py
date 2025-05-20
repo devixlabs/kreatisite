@@ -3,22 +3,24 @@
 import argparse
 import subprocess
 import sys
+from typing import List, Optional
+
 # Enforce minimum Python version
 if sys.version_info < (3, 9):
     print("Error: KreatiSite requires Python 3.9 or above.", file=sys.stderr)
     sys.exit(1)
 
 
-def check_domain_availability(domain_name):
+def check_domain_availability(domain_name: str) -> int:
     """Check domain availability using AWS Route53.
 
     Args:
         domain_name: The domain name to check.
 
     Returns:
-        The output from the AWS CLI command.
+        int: 0 for success, 1 for failure
     """
-    cmd = [
+    cmd: List[str] = [
         "aws",
         "route53domains",
         "check-domain-availability",
@@ -49,8 +51,12 @@ def check_domain_availability(domain_name):
         return 1
 
 
-def main():
-    """Run the KreatiSite CLI application."""
+def main() -> Optional[int]:
+    """Run the KreatiSite CLI application.
+
+    Returns:
+        Optional[int]: Return code, 0 for success, 1 for failure
+    """
     parser = argparse.ArgumentParser(
         prog="kreatisite",
         description="KreatiSite - A command line application",
@@ -82,13 +88,15 @@ def main():
     # Handle commands
     if args.command == "help" or not args.command:
         print_help()
+        return None
     elif args.command == "check-domain":
         return check_domain_availability(args.domain_name)
     else:
         parser.print_help()
+        return None
 
 
-def print_help():
+def print_help() -> None:
     """Print detailed help information."""
     help_text = """
 KreatiSite Command Line Application

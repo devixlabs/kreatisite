@@ -11,6 +11,9 @@ python = "^3.9"
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
 flake8 = "^7.2.0"
+pre-commit = "^4.2.0"
+mypy = "^1.15.0"
+isort = "^6.0.1"
 
 [build-system]
 requires = ["poetry-core"]
@@ -21,3 +24,9 @@ kreatisite = "kreatisite.cli:main"
 lint = "kreatisite.scripts:lint"
 test = "kreatisite.scripts:test"
 check = "kreatisite.scripts:check_all"
+setup-hooks = "kreatisite.scripts:setup_hooks"
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3

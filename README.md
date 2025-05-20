@@ -1,6 +1,6 @@
-# KreatiSite
+# kreatisite
 
-A command line application with Poetry dependency management and pre-commit hooks.
+A command line application to register, create, and deploy a new website.
 
 ## Installation
 

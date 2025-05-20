@@ -18,3 +18,6 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 kreatisite = "kreatisite.cli:main"
+lint = "kreatisite.scripts:lint"
+test = "kreatisite.scripts:test"
+check = "kreatisite.scripts:check_all"

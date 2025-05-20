@@ -1,11 +1,11 @@
-"""Command-line interface for KratiSite."""
+"""Command-line interface for KreatiSite."""
 
 import argparse
 import subprocess
 import sys
 # Enforce minimum Python version
 if sys.version_info < (3, 9):
-    print("Error: KratiSite requires Python 3.9 or above.", file=sys.stderr)
+    print("Error: KreatiSite requires Python 3.9 or above.", file=sys.stderr)
     sys.exit(1)
 
 
@@ -50,10 +50,10 @@ def check_domain_availability(domain_name):
 
 
 def main():
-    """Run the KratiSite CLI application."""
+    """Run the KreatiSite CLI application."""
     parser = argparse.ArgumentParser(
-        prog="kratisite",
-        description="KratiSite - A command line application",
+        prog="kreatisite",
+        description="KreatiSite - A command line application",
         epilog="For more information, visit https://devixlabs.com",
     )
 
@@ -91,17 +91,17 @@ def main():
 def print_help():
     """Print detailed help information."""
     help_text = """
-KratiSite Command Line Application
+KreatiSite Command Line Application
 =================================
 
 DESCRIPTION
 -----------
-KratiSite is a powerful command line tool designed to help you manage
+KreatiSite is a powerful command line tool designed to help you manage
 your tasks.
 
 USAGE
 -----
-kratisite [command] [options]
+kreatisite [command] [options]
 
 COMMANDS
 --------
@@ -111,10 +111,10 @@ check-domain    Check domain availability using AWS Route53
 EXAMPLES
 --------
 # Display help
-kratisite help
+kreatisite help
 
 # Check domain availability
-kratisite check-domain example.com
+kreatisite check-domain example.com
 
 NOTES
 -----

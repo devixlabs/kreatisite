@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "kratisite"
+name = "kreatisite"
 version = "0.1.0"
-description = "KratiSite command line application"
+description = "KreatiSite command line application"
 authors = ["DevixLabs <info@devixlabs.com>"]
 readme = "README.md"
 
@@ -17,4 +17,4 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-kratisite = "kratisite.cli:main"
+kreatisite = "kreatisite.cli:main"

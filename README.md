@@ -1,4 +1,4 @@
-# KratiSite
+# KreatiSite
 
 A command line application with Poetry dependency management.
 
@@ -16,7 +16,7 @@ poetry install
 
 ```bash
 # Run the application
-poetry run kratisite help
+poetry run kreatisite help
 ```
 
 ## Development
@@ -26,5 +26,5 @@ poetry run kratisite help
 poetry shell
 
 # Now you can run the application directly
-kratisite help
+kreatisite help
 ```

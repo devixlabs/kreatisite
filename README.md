@@ -15,8 +15,19 @@ poetry install
 ## Usage
 
 ```bash
-# Run the application
+# Display help and commands
 poetry run kreatisite help
+
+# Check domain availability
+poetry run kreatisite check-domain example.com
+
+# Register a domain (privacy protection is enabled by default)
+# JSON contact info must be provided for admin, registrant, and tech contacts
+poetry run kreatisite register-domain example.com \
+  --duration-in-years 1 \
+  --admin-contact '{"FirstName":"John","LastName":"Doe","ContactType":"PERSON","AddressLine1":"123 Main St","City":"Anytown","State":"CA","CountryCode":"US","ZipCode":"12345","PhoneNumber":"+1.1234567890","Email":"john.doe@example.com"}' \
+  --registrant-contact '{"FirstName":"John","LastName":"Doe","ContactType":"PERSON","AddressLine1":"123 Main St","City":"Anytown","State":"CA","CountryCode":"US","ZipCode":"12345","PhoneNumber":"+1.1234567890","Email":"john.doe@example.com"}' \
+  --tech-contact '{"FirstName":"John","LastName":"Doe","ContactType":"PERSON","AddressLine1":"123 Main St","City":"Anytown","State":"CA","CountryCode":"US","ZipCode":"12345","PhoneNumber":"+1.1234567890","Email":"john.doe@example.com"}'
 ```
 
 ## Development

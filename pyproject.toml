@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "kreatisite"
 version = "0.1.0"
-description = "KreatiSite command line application"
+description = "Kreatisite command line application"
 authors = ["DevixLabs <info@devixlabs.com>"]
 readme = "README.md"
 

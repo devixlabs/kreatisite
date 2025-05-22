@@ -1,4 +1,4 @@
-"""Command-line interface for KreatiSite."""
+"""Command-line interface for Kreatisite."""
 
 import argparse
 import subprocess
@@ -7,7 +7,7 @@ from typing import List, Optional
 
 # Enforce minimum Python version
 if sys.version_info < (3, 9):
-    print("Error: KreatiSite requires Python 3.9 or above.", file=sys.stderr)
+    print("Error: Kreatisite requires Python 3.9 or above.", file=sys.stderr)
     sys.exit(1)
 
 
@@ -52,14 +52,14 @@ def check_domain_availability(domain_name: str) -> int:
 
 
 def main() -> Optional[int]:
-    """Run the KreatiSite CLI application.
+    """Run the Kreatisite CLI application.
 
     Returns:
         Optional[int]: Return code, 0 for success, 1 for failure
     """
     parser = argparse.ArgumentParser(
         prog="kreatisite",
-        description="KreatiSite - A command line application",
+        description="Kreatisite - A command line application",
         epilog="For more information, visit https://devixlabs.com",
     )
 
@@ -99,12 +99,12 @@ def main() -> Optional[int]:
 def print_help() -> None:
     """Print detailed help information."""
     help_text = """
-KreatiSite Command Line Application
+Kreatisite Command Line Application
 =================================
 
 DESCRIPTION
 -----------
-KreatiSite is a powerful command line tool designed to help you manage
+Kreatisite is a powerful command line tool designed to help you manage
 your tasks.
 
 USAGE

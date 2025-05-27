@@ -86,28 +86,12 @@ def register_domain(args: argparse.Namespace) -> int:
         return 1
 
 
-def main() -> Optional[int]:
-    """Run the Kreatisite CLI application.
+def setup_check_domain_parser(subparsers: argparse._SubParsersAction) -> None:
+    """Setup the check-domain command parser.
 
-    Returns:
-        Optional[int]: Return code, 0 for success, 1 for failure
+    Args:
+        subparsers: The subparser group to add the command to
     """
-    parser = argparse.ArgumentParser(
-        prog="kreatisite",
-        description="Kreatisite - A command line application",
-        epilog="For more information, visit https://devixlabs.com",
-    )
-
-    # Create subparsers for commands
-    subparsers = parser.add_subparsers(dest="command", help="Commands")
-
-    # Add the help command
-    subparsers.add_parser(
-        "help",
-        help="Display detailed help information",
-    )
-
-    # Add the check-domain command
     check_domain_parser = subparsers.add_parser(
         "check-domain",
         help="Check domain availability using AWS Route53",
@@ -116,7 +100,14 @@ def main() -> Optional[int]:
         "domain_name",
         help="Domain name to check (e.g., example.com)",
     )
-    # Add the register-domain command
+
+
+def setup_register_domain_parser(subparsers: argparse._SubParsersAction) -> None:
+    """Setup the register-domain command parser.
+
+    Args:
+        subparsers: The subparser group to add the command to
+    """
     register_parser = subparsers.add_parser(
         "register-domain",
         help="Register a domain using AWS Route53",
@@ -159,20 +150,63 @@ def main() -> Optional[int]:
         help="Tech contact info as JSON",
     )
 
+
+def create_parser() -> argparse.ArgumentParser:
+    """Create and configure the argument parser.
+
+    Returns:
+        argparse.ArgumentParser: The configured parser
+    """
+    parser = argparse.ArgumentParser(
+        prog="kreatisite",
+        description="Kreatisite - A command line application",
+        epilog="For more information, visit https://devixlabs.com",
+    )
+
+    # Create subparsers for commands
+    subparsers = parser.add_subparsers(dest="command", help="Commands")
+
+    # Add the help command
+    subparsers.add_parser(
+        "help",
+        help="Display detailed help information",
+    )
+
+    # Setup command parsers
+    setup_check_domain_parser(subparsers)
+    setup_register_domain_parser(subparsers)
+
+    return parser
+
+
+def main() -> Optional[int]:
+    """Run the Kreatisite CLI application.
+
+    Returns:
+        Optional[int]: Return code, 0 for success, 1 for failure
+    """
+    parser = create_parser()
+
     # Parse arguments
     args = parser.parse_args()
 
+    # Command handlers mapping
+    command_handlers = {
+        "help": lambda _: print_help(),
+        "check-domain": lambda args: check_domain_availability(args.domain_name),
+        "register-domain": register_domain,
+    }
+
     # Handle commands
-    if args.command == "help" or not args.command:
-        print_help()
+    if not args.command or args.command not in command_handlers:
+        if not args.command:
+            print_help()
+        else:
+            parser.print_help()
         return None
-    elif args.command == "check-domain":
-        return check_domain_availability(args.domain_name)
-    elif args.command == "register-domain":
-        return register_domain(args)
-    else:
-        parser.print_help()
-        return None
+
+    # Execute the appropriate handler
+    return command_handlers[args.command](args)
 
 
 def print_help() -> None:

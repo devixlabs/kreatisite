@@ -2,3 +2,5 @@ kreatisite/__pycache__
 tests/__pycache__
 dist/
 **/.claude/settings.local.json
+
+aws-register-domain.yaml

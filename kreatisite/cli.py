@@ -5,6 +5,8 @@ import subprocess
 import sys
 from typing import List, Optional
 
+import yaml
+
 # Enforce minimum Python version
 if sys.version_info < (3, 9):
     print("Error: Kreatisite requires Python 3.9 or above.", file=sys.stderr)
@@ -53,7 +55,18 @@ def check_domain_availability(domain_name: str) -> int:
 
 def register_domain(args: argparse.Namespace) -> int:
     """Register a domain using AWS Route53."""
-    # Build the AWS CLI command
+    # Verify config file exists
+    try:
+        with open(args.config_file, 'r') as f:
+            yaml.safe_load(f)
+    except FileNotFoundError:
+        print(f"Error: Config file '{args.config_file}' not found", file=sys.stderr)
+        return 1
+    except yaml.YAMLError as e:
+        print(f"Error parsing YAML config file: {str(e)}", file=sys.stderr)
+        return 1
+
+    # Build the AWS CLI command using --cli-input-yaml
     cmd = [
         "aws", "route53domains", "register-domain",
         "--domain-name", args.domain_name,
@@ -64,14 +77,13 @@ def register_domain(args: argparse.Namespace) -> int:
         cmd.append("--auto-renew")
     else:
         cmd.append("--no-auto-renew")
-    # Contact info (JSON strings expected)
-    cmd.extend(["--admin-contact", args.admin_contact])
-    cmd.extend(["--registrant-contact", args.registrant_contact])
-    cmd.extend(["--tech-contact", args.tech_contact])
     # Always enable privacy protection for contacts
     cmd.append("--privacy-protect-admin-contact")
     cmd.append("--privacy-protect-registrant-contact")
     cmd.append("--privacy-protect-tech-contact")
+    # Use YAML file for contact information
+    cmd.extend(["--cli-input-yaml", f"file://{args.config_file}"])
+
     # Execute the command
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, check=False)
@@ -86,8 +98,8 @@ def register_domain(args: argparse.Namespace) -> int:
         return 1
 
 
-def setup_check_domain_parser(subparsers: argparse._SubParsersAction) -> None:
-    """Setup the check-domain command parser.
+def create_check_domain_parser(subparsers: argparse._SubParsersAction) -> None:
+    """Create the check-domain command parser.
 
     Args:
         subparsers: The subparser group to add the command to
@@ -102,8 +114,8 @@ def setup_check_domain_parser(subparsers: argparse._SubParsersAction) -> None:
     )
 
 
-def setup_register_domain_parser(subparsers: argparse._SubParsersAction) -> None:
-    """Setup the register-domain command parser.
+def create_register_domain_parser(subparsers: argparse._SubParsersAction) -> None:
+    """Create the register-domain command parser.
 
     Args:
         subparsers: The subparser group to add the command to
@@ -115,6 +127,13 @@ def setup_register_domain_parser(subparsers: argparse._SubParsersAction) -> None
     register_parser.add_argument(
         "domain_name",
         help="Domain name to register (e.g., example.com)",
+    )
+    register_parser.add_argument(
+        "--config-file",
+        dest="config_file",
+        default="aws-register-domain.yaml",
+        help="YAML config file with contact information "
+             "(default: aws-register-domain.yaml)",
     )
     register_parser.add_argument(
         "--duration-in-years",
@@ -130,24 +149,6 @@ def setup_register_domain_parser(subparsers: argparse._SubParsersAction) -> None
         action="store_false",
         default=True,
         help="Disable auto-renewal (auto-renew is on by default)",
-    )
-    register_parser.add_argument(
-        "--admin-contact",
-        dest="admin_contact",
-        required=True,
-        help="Admin contact info as JSON",
-    )
-    register_parser.add_argument(
-        "--registrant-contact",
-        dest="registrant_contact",
-        required=True,
-        help="Registrant contact info as JSON",
-    )
-    register_parser.add_argument(
-        "--tech-contact",
-        dest="tech_contact",
-        required=True,
-        help="Tech contact info as JSON",
     )
 
 
@@ -172,9 +173,9 @@ def create_parser() -> argparse.ArgumentParser:
         help="Display detailed help information",
     )
 
-    # Setup command parsers
-    setup_check_domain_parser(subparsers)
-    setup_register_domain_parser(subparsers)
+    # Create command parsers
+    create_check_domain_parser(subparsers)
+    create_register_domain_parser(subparsers)
 
     return parser
 

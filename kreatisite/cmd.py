@@ -1,11 +1,11 @@
 """Command functions for Kreatisite CLI."""
 
+import argparse
 import subprocess
 import sys
 from typing import List
 
 import yaml
-import argparse
 
 
 def check_domain_availability(domain_name: str) -> int:

@@ -15,7 +15,7 @@ repos:
         additional_dependencies: [flake8-docstrings]
 
 -   repo: https://github.com/pycqa/isort
-    rev: 5.12.0
+    rev: 6.0.0  # Updated to match pyproject.toml version
     hooks:
     -   id: isort
         args: [--profile, black]

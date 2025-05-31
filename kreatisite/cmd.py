@@ -56,6 +56,12 @@ def register_domain(args: argparse.Namespace) -> int:
             yaml.safe_load(f)
     except FileNotFoundError:
         print(f"Error: Config file '{args.config_file}' not found", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("To create the required configuration file:", file=sys.stderr)
+        print(f"  1. Copy the example file: cp aws-register-domain.yaml.example {args.config_file}",
+              file=sys.stderr)
+        print(f"  2. Edit {args.config_file} with your information", file=sys.stderr)
+        print("  3. Run the register-domain command again", file=sys.stderr)
         return 1
     except yaml.YAMLError as e:
         print(f"Error parsing YAML config file: {str(e)}", file=sys.stderr)

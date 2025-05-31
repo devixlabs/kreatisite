@@ -48,6 +48,24 @@ poetry run test
 poetry run check
 ```
 
+## Testing
+
+Run the full test suite:
+
+```bash
+# Run all tests
+poetry run pytest
+
+# Run tests with verbose output
+poetry run pytest -v
+
+# Run specific test file
+poetry run pytest tests/test_cli.py
+
+# Run tests with coverage
+poetry run pytest --cov=kreatisite
+```
+
 ## Build
 
 The project includes a pre-build script that runs all checks before building:

@@ -2,14 +2,41 @@
 
 A command line application to register, create, and deploy a new website.
 
+## System Requirements
+
+- Python 3.9 or higher
+- AWS CLI v2+ (for domain operations)
+
+### Installing System Dependencies
+
+**AWS CLI Installation:**
+
+Ubuntu/Debian:
+```bash
+# Method 1: Official installer (recommended)
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+Other platforms: See [AWS CLI Installation Guide](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
+
+**Configure AWS Credentials:**
+```bash
+aws configure
+```
+
 ## Installation
 
 ```bash
 # Install Poetry if you haven't already
-pip install poetry
+curl -sSL https://install.python-poetry.org | python3 -
 
 # Install dependencies
 poetry install
+
+# Optional: Install with AWS CLI bundled
+poetry install --with aws
 ```
 
 ## Usage

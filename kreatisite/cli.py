@@ -1,5 +1,6 @@
 """Command-line interface for Kreatisite."""
 
+import shutil
 import sys
 from typing import Optional
 
@@ -13,6 +14,29 @@ from .cmd import check_domain_availability, register_domain
 from .parser import create_parser
 
 
+def check_dependencies() -> None:
+    """Check for required external dependencies."""
+    required_commands = ['aws']
+    missing = []
+
+    for cmd in required_commands:
+        if not shutil.which(cmd):
+            missing.append(cmd)
+
+    if missing:
+        print(f"Error: Missing required commands: {', '.join(missing)}", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("To install AWS CLI:", file=sys.stderr)
+        print("  Ubuntu/Debian:", file=sys.stderr)
+        url = "https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html"
+        print(f"    {url}", file=sys.stderr)
+        print("  Or try: sudo apt install awscli", file=sys.stderr)
+        print("", file=sys.stderr)
+        print("After installation, configure AWS credentials:", file=sys.stderr)
+        print("  aws configure", file=sys.stderr)
+        sys.exit(1)
+
+
 def main() -> Optional[int]:
     """Run the Kreatisite CLI application.
 
@@ -23,6 +47,10 @@ def main() -> Optional[int]:
 
     # Parse arguments
     args = parser.parse_args()
+
+    # Check dependencies for AWS commands
+    if hasattr(args, 'command') and args.command in ['check-domain', 'register-domain']:
+        check_dependencies()
 
     # Command handlers mapping
     command_handlers = {

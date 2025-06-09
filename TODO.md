@@ -3,6 +3,8 @@
 ## Overview
 This document outlines the plan to improve E2E/smoke testing for the kreatisite CLI tool, replacing the basic `smoketest.sh` with a comprehensive Python-based testing solution.
 
+**Status**: Phases 1 & 2 completed (21 unit tests, 87% coverage). Phases 3-5 remain for future implementation.
+
 ## Current Issues with smoketest.sh
 - No actual assertions on command output
 - No exit code verification
@@ -39,17 +41,18 @@ This document outlines the plan to improve E2E/smoke testing for the kreatisite 
 
 ## Implementation Tasks
 
-### Phase 1: Setup Testing Infrastructure
-- [ ] Add testing dependencies to pyproject.toml:
+### Phase 1: Setup Testing Infrastructure ✅ COMPLETED
+- [x] Add testing dependencies to pyproject.toml:
   ```toml
   [tool.poetry.group.dev.dependencies]
-  clirunner = "^1.0.0"
+  clirunner = "^0.2.0"
   pytest-subprocess = "^1.5.0"
   pytest-console-scripts = "^1.4.1"
   pytest-timeout = "^2.1.0"
+  pytest-cov = "^4.0.0"
   ```
-- [ ] Create test configuration in pytest.ini:
-  ```ini
+- [x] Create test configuration in pyproject.toml:
+  ```toml
   [tool.pytest.ini_options]
   markers = [
       "unit: Unit tests (fast, mocked)",
@@ -58,15 +61,15 @@ This document outlines the plan to improve E2E/smoke testing for the kreatisite 
   ]
   ```
 
-### Phase 2: Implement Unit Tests with Mocking
-- [ ] Create `tests/test_cli_unit.py` using clirunner
-  - [ ] Test all commands with mocked subprocess
-  - [ ] Test error scenarios and edge cases
-  - [ ] Test argument parsing and validation
-- [ ] Create `tests/test_aws_mocking.py` using pytest-subprocess
-  - [ ] Mock AWS CLI success responses
-  - [ ] Mock AWS CLI error responses
-  - [ ] Test network failure scenarios
+### Phase 2: Implement Unit Tests with Mocking ✅ COMPLETED
+- [x] Create `tests/test_cli_unit.py` using clirunner (11 comprehensive tests)
+  - [x] Test all commands with mocked subprocess
+  - [x] Test error scenarios and edge cases
+  - [x] Test argument parsing and validation
+- [x] Create `tests/test_aws_mocking.py` using pytest-subprocess (10 tests)
+  - [x] Mock AWS CLI success responses
+  - [x] Mock AWS CLI error responses
+  - [x] Test network failure scenarios
 
 ### Phase 3: Implement Integration Tests
 - [ ] Create `tests/test_cli_integration.py` using pytest-console-scripts

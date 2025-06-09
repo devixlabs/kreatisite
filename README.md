@@ -34,9 +34,6 @@ curl -sSL https://install.python-poetry.org | python3 -
 
 # Install dependencies
 poetry install
-
-# Optional: Install with AWS CLI bundled
-poetry install --with aws
 ```
 
 ## Usage

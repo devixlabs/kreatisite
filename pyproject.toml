@@ -11,16 +11,16 @@ pyyaml = "^6.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
+pytest-cov = "^4.0.0"
 flake8 = "^7.2.0"
 pre-commit = "^4.2.0"
 mypy = "^1.15.0"
 isort = "^6.0.1"
+clirunner = "^0.2.0"
+pytest-subprocess = "^1.5.0"
+pytest-console-scripts = "^1.4.1"
+pytest-timeout = "^2.1.0"
 
-[tool.poetry.group.aws]
-optional = true
-
-[tool.poetry.group.aws.dependencies]
-awscli = "^2.0.0"
 
 [build-system]
 requires = ["poetry-core"]
@@ -37,3 +37,10 @@ setup-hooks = "kreatisite.scripts:setup_hooks"
 profile = "black"
 line_length = 100
 multi_line_output = 3
+
+[tool.pytest.ini_options]
+markers = [
+    "unit: Unit tests (fast, mocked)",
+    "integration: Integration tests (installed package)",
+    "e2e: End-to-end tests (real AWS calls)",
+]

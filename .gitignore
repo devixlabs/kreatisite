@@ -3,4 +3,10 @@ tests/__pycache__
 dist/
 **/.claude/settings.local.json
 
+# Coverage files
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
 aws-register-domain.yaml

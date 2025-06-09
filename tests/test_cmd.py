@@ -5,7 +5,7 @@ from unittest.mock import Mock, mock_open, patch
 from kreatisite.cmd import check_domain_availability, register_domain
 
 
-@patch('kreatisite.cmd.subprocess.run')
+@patch("kreatisite.cmd.subprocess.run")
 def test_check_domain_availability_success(mock_run, capsys) -> None:
     """Test successful domain availability check."""
     mock_result = Mock()
@@ -27,7 +27,7 @@ def test_check_domain_availability_success(mock_run, capsys) -> None:
     )
 
 
-@patch('kreatisite.cmd.subprocess.run')
+@patch("kreatisite.cmd.subprocess.run")
 def test_check_domain_availability_error(mock_run, capsys) -> None:
     """Test domain availability check with AWS error."""
     mock_result = Mock()
@@ -43,7 +43,7 @@ def test_check_domain_availability_error(mock_run, capsys) -> None:
     assert "Error: An error occurred (AccessDenied)" in captured.err
 
 
-@patch('kreatisite.cmd.subprocess.run')
+@patch("kreatisite.cmd.subprocess.run")
 def test_check_domain_availability_exception(mock_run, capsys) -> None:
     """Test domain availability check with subprocess exception."""
     mock_run.side_effect = Exception("Connection error")
@@ -70,7 +70,7 @@ def test_register_domain_config_file_not_found(capsys) -> None:
     assert "Edit nonexistent.yaml with your information" in captured.err
 
 
-@patch('builtins.open', mock_open(read_data='invalid: yaml: content: ['))
+@patch("builtins.open", mock_open(read_data="invalid: yaml: content: ["))
 def test_register_domain_invalid_yaml(capsys) -> None:
     """Test register domain with invalid YAML config."""
     mock_args = Mock()
@@ -84,8 +84,8 @@ def test_register_domain_invalid_yaml(capsys) -> None:
     assert "Error parsing YAML config file:" in captured.err
 
 
-@patch('kreatisite.cmd.subprocess.run')
-@patch('builtins.open', mock_open(read_data='AdminContact:\n  FirstName: John'))
+@patch("kreatisite.cmd.subprocess.run")
+@patch("builtins.open", mock_open(read_data="AdminContact:\n  FirstName: John"))
 def test_register_domain_success(mock_run, capsys) -> None:
     """Test successful domain registration."""
     mock_result = Mock()
@@ -108,20 +108,25 @@ def test_register_domain_success(mock_run, capsys) -> None:
 
     # Verify the AWS CLI command was constructed correctly
     expected_cmd = [
-        "aws", "route53domains", "register-domain",
-        "--domain-name", "example.com",
-        "--duration-in-years", "1",
+        "aws",
+        "route53domains",
+        "register-domain",
+        "--domain-name",
+        "example.com",
+        "--duration-in-years",
+        "1",
         "--auto-renew",
         "--privacy-protect-admin-contact",
         "--privacy-protect-registrant-contact",
         "--privacy-protect-tech-contact",
-        "--cli-input-yaml", "file://config.yaml"
+        "--cli-input-yaml",
+        "file://config.yaml",
     ]
     mock_run.assert_called_once_with(expected_cmd, capture_output=True, text=True, check=False)
 
 
-@patch('kreatisite.cmd.subprocess.run')
-@patch('builtins.open', mock_open(read_data='AdminContact:\n  FirstName: John'))
+@patch("kreatisite.cmd.subprocess.run")
+@patch("builtins.open", mock_open(read_data="AdminContact:\n  FirstName: John"))
 def test_register_domain_no_auto_renew(mock_run) -> None:
     """Test domain registration with auto-renew disabled."""
     mock_result = Mock()
@@ -142,20 +147,25 @@ def test_register_domain_no_auto_renew(mock_run) -> None:
 
     # Verify --no-auto-renew is used instead of --auto-renew
     expected_cmd = [
-        "aws", "route53domains", "register-domain",
-        "--domain-name", "example.com",
-        "--duration-in-years", "2",
+        "aws",
+        "route53domains",
+        "register-domain",
+        "--domain-name",
+        "example.com",
+        "--duration-in-years",
+        "2",
         "--no-auto-renew",
         "--privacy-protect-admin-contact",
         "--privacy-protect-registrant-contact",
         "--privacy-protect-tech-contact",
-        "--cli-input-yaml", "file://config.yaml"
+        "--cli-input-yaml",
+        "file://config.yaml",
     ]
     mock_run.assert_called_once_with(expected_cmd, capture_output=True, text=True, check=False)
 
 
-@patch('kreatisite.cmd.subprocess.run')
-@patch('builtins.open', mock_open(read_data='AdminContact:\n  FirstName: John'))
+@patch("kreatisite.cmd.subprocess.run")
+@patch("builtins.open", mock_open(read_data="AdminContact:\n  FirstName: John"))
 def test_register_domain_aws_error(mock_run, capsys) -> None:
     """Test domain registration with AWS error."""
     mock_result = Mock()
@@ -177,8 +187,8 @@ def test_register_domain_aws_error(mock_run, capsys) -> None:
     assert "Error: Domain already exists" in captured.err
 
 
-@patch('kreatisite.cmd.subprocess.run')
-@patch('builtins.open', mock_open(read_data='AdminContact:\n  FirstName: John'))
+@patch("kreatisite.cmd.subprocess.run")
+@patch("builtins.open", mock_open(read_data="AdminContact:\n  FirstName: John"))
 def test_register_domain_subprocess_exception(mock_run, capsys) -> None:
     """Test domain registration with subprocess exception."""
     mock_run.side_effect = Exception("AWS CLI not found")

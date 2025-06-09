@@ -58,10 +58,9 @@ def test_create_parser_register_domain_custom_config() -> None:
     """Test register-domain command with custom config file."""
     parser = create_parser()
 
-    args = parser.parse_args([
-        "register-domain", "example.com",
-        "--config-file", "custom-config.yaml"
-    ])
+    args = parser.parse_args(
+        ["register-domain", "example.com", "--config-file", "custom-config.yaml"]
+    )
     assert args.config_file == "custom-config.yaml"
 
 
@@ -69,10 +68,7 @@ def test_create_parser_register_domain_custom_duration() -> None:
     """Test register-domain command with custom duration."""
     parser = create_parser()
 
-    args = parser.parse_args([
-        "register-domain", "example.com",
-        "--duration-in-years", "3"
-    ])
+    args = parser.parse_args(["register-domain", "example.com", "--duration-in-years", "3"])
     assert args.duration_in_years == 3
 
 
@@ -80,10 +76,7 @@ def test_create_parser_register_domain_no_auto_renew() -> None:
     """Test register-domain command with auto-renew disabled."""
     parser = create_parser()
 
-    args = parser.parse_args([
-        "register-domain", "example.com",
-        "--no-auto-renew"
-    ])
+    args = parser.parse_args(["register-domain", "example.com", "--no-auto-renew"])
     assert args.auto_renew is False
 
 
@@ -91,12 +84,17 @@ def test_create_parser_register_domain_all_options() -> None:
     """Test register-domain command with all options."""
     parser = create_parser()
 
-    args = parser.parse_args([
-        "register-domain", "example.com",
-        "--config-file", "my-config.yaml",
-        "--duration-in-years", "5",
-        "--no-auto-renew"
-    ])
+    args = parser.parse_args(
+        [
+            "register-domain",
+            "example.com",
+            "--config-file",
+            "my-config.yaml",
+            "--duration-in-years",
+            "5",
+            "--no-auto-renew",
+        ]
+    )
     assert args.command == "register-domain"
     assert args.domain_name == "example.com"
     assert args.config_file == "my-config.yaml"
@@ -171,7 +169,4 @@ def test_parser_invalid_duration_type() -> None:
 
     # Test invalid duration (non-integer)
     with pytest.raises(SystemExit):
-        parser.parse_args([
-            "register-domain", "example.com",
-            "--duration-in-years", "not-a-number"
-        ])
+        parser.parse_args(["register-domain", "example.com", "--duration-in-years", "not-a-number"])

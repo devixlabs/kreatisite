@@ -11,9 +11,7 @@ def lint() -> int:
         int: 0 if linting passes, 1 if it fails
     """
     print("Running flake8 linter...")
-    result = subprocess.run(
-        ["flake8", "kreatisite"], capture_output=True, text=True
-    )
+    result = subprocess.run(["flake8", "kreatisite"], capture_output=True, text=True)
     if result.returncode != 0:
         print(result.stdout)
         print(result.stderr, file=sys.stderr)
@@ -68,10 +66,7 @@ def setup_hooks() -> int:
     try:
         # Get the project root directory
         result = subprocess.run(
-            ["pre-commit", "install"],
-            check=True,
-            capture_output=True,
-            text=True
+            ["pre-commit", "install"], check=True, capture_output=True, text=True
         )
         print(result.stdout)
         print("Pre-commit hooks installed successfully!")

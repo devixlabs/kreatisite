@@ -37,8 +37,7 @@ def create_register_domain_parser(subparsers: argparse._SubParsersAction) -> Non
         "--config-file",
         dest="config_file",
         default="aws-register-domain.yaml",
-        help="YAML config file with contact information "
-             "(default: aws-register-domain.yaml)",
+        help="YAML config file with contact information " "(default: aws-register-domain.yaml)",
     )
     register_parser.add_argument(
         "--duration-in-years",

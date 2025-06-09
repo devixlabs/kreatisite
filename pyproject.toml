@@ -13,6 +13,7 @@ pyyaml = "^6.0"
 pytest = "^7.3.1"
 pytest-cov = "^4.0.0"
 flake8 = "^7.2.0"
+black = "^24.0.0"
 pre-commit = "^4.2.0"
 mypy = "^1.15.0"
 isort = "^6.0.1"
@@ -32,6 +33,10 @@ lint = "kreatisite.scripts:lint"
 test = "kreatisite.scripts:test"
 check = "kreatisite.scripts:check_all"
 setup-hooks = "kreatisite.scripts:setup_hooks"
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
 
 [tool.isort]
 profile = "black"

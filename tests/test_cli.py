@@ -17,7 +17,7 @@ def test_print_help(capsys) -> None:
     assert "register-domain" in captured.out
 
 
-@patch('kreatisite.cli.create_parser')
+@patch("kreatisite.cli.create_parser")
 def test_main_no_command(mock_create_parser, capsys) -> None:
     """Test main function with no command shows help."""
     mock_parser = Mock()
@@ -33,7 +33,7 @@ def test_main_no_command(mock_create_parser, capsys) -> None:
     assert result is None
 
 
-@patch('kreatisite.cli.create_parser')
+@patch("kreatisite.cli.create_parser")
 def test_main_help_command(mock_create_parser, capsys) -> None:
     """Test main function with help command."""
     mock_parser = Mock()
@@ -49,8 +49,8 @@ def test_main_help_command(mock_create_parser, capsys) -> None:
     assert result is None
 
 
-@patch('kreatisite.cli.check_domain_availability')
-@patch('kreatisite.cli.create_parser')
+@patch("kreatisite.cli.check_domain_availability")
+@patch("kreatisite.cli.create_parser")
 def test_main_check_domain_command(mock_create_parser, mock_check_domain) -> None:
     """Test main function with check-domain command."""
     mock_parser = Mock()
@@ -67,8 +67,8 @@ def test_main_check_domain_command(mock_create_parser, mock_check_domain) -> Non
     assert result == 0
 
 
-@patch('kreatisite.cli.register_domain')
-@patch('kreatisite.cli.create_parser')
+@patch("kreatisite.cli.register_domain")
+@patch("kreatisite.cli.create_parser")
 def test_main_register_domain_command(mock_create_parser, mock_register_domain) -> None:
     """Test main function with register-domain command."""
     mock_parser = Mock()
@@ -84,7 +84,7 @@ def test_main_register_domain_command(mock_create_parser, mock_register_domain) 
     assert result == 0
 
 
-@patch('kreatisite.cli.create_parser')
+@patch("kreatisite.cli.create_parser")
 def test_main_invalid_command(mock_create_parser) -> None:
     """Test main function with invalid command."""
     mock_parser = Mock()
@@ -105,4 +105,5 @@ def test_python_version_check() -> None:
     # The actual enforcement happens at module level, so just importing
     # kreatisite.cli on Python 3.9+ should work
     import kreatisite.cli
-    assert hasattr(kreatisite.cli, 'main')
+
+    assert hasattr(kreatisite.cli, "main")

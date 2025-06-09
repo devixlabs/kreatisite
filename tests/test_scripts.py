@@ -5,7 +5,7 @@ from unittest.mock import Mock, patch
 from kreatisite.scripts import check_all, lint, setup_hooks
 
 
-@patch('kreatisite.scripts.subprocess.run')
+@patch("kreatisite.scripts.subprocess.run")
 def test_lint_success(mock_run, capsys) -> None:
     """Test successful linting."""
     mock_result = Mock()
@@ -20,12 +20,10 @@ def test_lint_success(mock_run, capsys) -> None:
     captured = capsys.readouterr()
     assert "Running flake8 linter..." in captured.out
     assert "Linting passed!" in captured.out
-    mock_run.assert_called_once_with(
-        ["flake8", "kreatisite"], capture_output=True, text=True
-    )
+    mock_run.assert_called_once_with(["flake8", "kreatisite"], capture_output=True, text=True)
 
 
-@patch('kreatisite.scripts.subprocess.run')
+@patch("kreatisite.scripts.subprocess.run")
 def test_lint_failure(mock_run, capsys) -> None:
     """Test linting with errors."""
     mock_result = Mock()
@@ -43,7 +41,7 @@ def test_lint_failure(mock_run, capsys) -> None:
     assert "Some error" in captured.err
 
 
-@patch('kreatisite.scripts.subprocess.run')
+@patch("kreatisite.scripts.subprocess.run")
 def test_setup_hooks_success(mock_run, capsys) -> None:
     """Test successful pre-commit hooks setup."""
     mock_result = Mock()
@@ -59,14 +57,11 @@ def test_setup_hooks_success(mock_run, capsys) -> None:
     assert "pre-commit installed at .git/hooks/pre-commit" in captured.out
     assert "Pre-commit hooks installed successfully!" in captured.out
     mock_run.assert_called_once_with(
-        ["pre-commit", "install"],
-        check=True,
-        capture_output=True,
-        text=True
+        ["pre-commit", "install"], check=True, capture_output=True, text=True
     )
 
 
-@patch('kreatisite.scripts.subprocess.run')
+@patch("kreatisite.scripts.subprocess.run")
 def test_setup_hooks_called_process_error(mock_run, capsys) -> None:
     """Test setup_hooks with CalledProcessError."""
     from subprocess import CalledProcessError
@@ -86,7 +81,7 @@ def test_setup_hooks_called_process_error(mock_run, capsys) -> None:
     assert "Error message" in captured.err
 
 
-@patch('kreatisite.scripts.subprocess.run')
+@patch("kreatisite.scripts.subprocess.run")
 def test_setup_hooks_unexpected_error(mock_run, capsys) -> None:
     """Test setup_hooks with unexpected exception."""
     mock_run.side_effect = Exception("Unexpected error")
@@ -109,6 +104,7 @@ def test_main_module_execution() -> None:
     # Test that the function exists and is importable
     # This is sufficient to verify the module structure is correct
     from kreatisite.scripts import check_all as imported_check_all
+
     assert imported_check_all is check_all
 
 

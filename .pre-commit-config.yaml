@@ -3,29 +3,53 @@ repos:
     rev: v4.5.0
     hooks:
     -   id: trailing-whitespace
+        always_run: true
+        pass_filenames: false
     -   id: end-of-file-fixer
+        always_run: true
+        pass_filenames: false
     -   id: check-yaml
+        always_run: true
+        pass_filenames: false
     -   id: check-toml
+        always_run: true
+        pass_filenames: false
     -   id: check-added-large-files
 
--   repo: https://github.com/pycqa/flake8
-    rev: 7.2.0
+-   repo: https://github.com/psf/black
+    rev: 24.10.0
     hooks:
-    -   id: flake8
-        additional_dependencies: [flake8-docstrings]
+    -   id: black
+        args: [kreatisite, tests]
+        always_run: true
+        pass_filenames: false
 
 -   repo: https://github.com/pycqa/isort
     rev: 6.0.0  # Updated to match pyproject.toml version
     hooks:
     -   id: isort
-        args: [--profile, black]
+        args: [--profile, black, kreatisite, tests]
+        always_run: true
+        pass_filenames: false
+
+-   repo: https://github.com/pycqa/flake8
+    rev: 7.2.0
+    hooks:
+    -   id: flake8
+        args: [kreatisite]
+        additional_dependencies: [flake8-docstrings]
+        always_run: true
+        pass_filenames: false
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.9.0
     hooks:
     -   id: mypy
+        args: [kreatisite]
         exclude: ^tests/
         additional_dependencies: [types-PyYAML]
+        always_run: true
+        pass_filenames: false
 
 -   repo: local
     hooks:

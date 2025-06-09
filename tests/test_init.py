@@ -11,4 +11,4 @@ def test_version_exists() -> None:
 def test_version_format() -> None:
     """Test that version follows semantic versioning format."""
     assert isinstance(__version__, str)
-    assert len(__version__.split('.')) >= 2  # At least major.minor
+    assert len(__version__.split(".")) >= 2  # At least major.minor

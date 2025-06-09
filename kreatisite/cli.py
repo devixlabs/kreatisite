@@ -16,7 +16,7 @@ from .parser import create_parser
 
 def check_dependencies() -> None:
     """Check for required external dependencies."""
-    required_commands = ['aws']
+    required_commands = ["aws"]
     missing = []
 
     for cmd in required_commands:
@@ -49,7 +49,7 @@ def main() -> Optional[int]:
     args = parser.parse_args()
 
     # Check dependencies for AWS commands
-    if hasattr(args, 'command') and args.command in ['check-domain', 'register-domain']:
+    if hasattr(args, "command") and args.command in ["check-domain", "register-domain"]:
         check_dependencies()
 
     # Command handlers mapping

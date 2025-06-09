@@ -188,6 +188,15 @@ def test_check_domain_real_aws():
 4. Deprecate `smoketest.sh` once new tests prove stable
 5. Document test execution in README.md
 
+## Implementation Notes (Lessons Learned)
+
+### Pytest Configuration Evolution
+- **Best Practice**: Use `pyproject.toml` for pytest configuration, not `pytest.ini`
+- **Rationale**: Single configuration file for all tools (pytest, mypy, isort, etc.)
+- **Modern Standard**: PEP 518 established pyproject.toml as the standard
+- **Poetry Integration**: Consistent with Poetry-based projects
+- **Reduced Clutter**: Fewer configuration files in project root
+
 ## Additional Best Practices
 - Use pytest fixtures for common test setup
 - Implement custom markers for test categorization

@@ -3,7 +3,7 @@
 ## Overview
 This document outlines the plan to improve E2E/smoke testing for the kreatisite CLI tool, replacing the basic `smoketest.sh` with a comprehensive Python-based testing solution.
 
-**Status**: Phases 1 & 2 completed (21 unit tests, 87% coverage). Phases 3-5 remain for future implementation.
+**Status**: Phases 1-4 completed (81 tests total, comprehensive coverage). Phase 5 remains for future CI/CD implementation.
 
 ## Current Issues with smoketest.sh
 - No actual assertions on command output
@@ -71,23 +71,26 @@ This document outlines the plan to improve E2E/smoke testing for the kreatisite 
   - [x] Mock AWS CLI error responses
   - [x] Test network failure scenarios
 
-### Phase 3: Implement Integration Tests
+### Phase 3: Implement Integration Tests ✅ COMPLETED
 - [x] Create `tests/test_cli_integration.py` using pytest-console-scripts
   - [x] Test installed package behavior
   - [x] Test with various Python versions
   - [x] Test configuration file handling
   - [x] Test error messages and help output
 
-### Phase 4: Implement E2E Smoke Tests
-- [ ] Create `tests/test_e2e_smoke.py` to replace smoketest.sh
-  - [ ] Use pytest markers to separate from unit tests
-  - [ ] Implement proper assertions on output
-  - [ ] Add timeout handling for network calls
-  - [ ] Include environment setup/teardown
-- [ ] Create `scripts/run_smoke_tests.py` as entry point
-  - [ ] Check for required AWS credentials
-  - [ ] Run only E2E marked tests
-  - [ ] Generate test report
+### Phase 4: Implement E2E Smoke Tests ✅ COMPLETED
+- [x] Create `tests/test_e2e_smoke.py` to replace smoketest.sh
+  - [x] Use pytest markers to separate from unit tests
+  - [x] Implement proper assertions on output
+  - [x] Add timeout handling for network calls
+  - [x] Include environment setup/teardown
+- [x] Create smoke test entry point in `kreatisite/scripts.py`
+  - [x] Check for required AWS credentials
+  - [x] Run only E2E marked tests
+  - [x] Generate test report
+- [x] Update `prebuild.sh` to include smoke tests
+- [x] Update `smoketest.sh` with deprecation notice
+- [x] Update `README.md` with smoke test documentation
 
 ### Phase 5: CI/CD Integration
 - [ ] Add test stages to CI pipeline:

@@ -81,5 +81,42 @@ def setup_hooks() -> int:
         return 1
 
 
+def run_smoke_tests() -> int:
+    """Run E2E smoke tests with AWS credentials checking.
+
+    Returns:
+        int: 0 if smoke tests pass, non-zero if they fail
+    """
+    import os
+
+    print("Running E2E smoke tests...")
+
+    # Check for AWS credentials
+    aws_available = os.environ.get("AWS_PROFILE") or (
+        os.environ.get("AWS_ACCESS_KEY_ID") and os.environ.get("AWS_SECRET_ACCESS_KEY")
+    )
+
+    if not aws_available:
+        print("⚠️  WARNING: AWS credentials not detected.")
+        print("   Set AWS_PROFILE or AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY")
+        print("   Some E2E tests will be skipped.")
+        print()
+    else:
+        print("✅ AWS credentials detected - running full E2E test suite")
+        print()
+
+    # Run only E2E marked tests with verbose output and timeout
+    result = subprocess.run(
+        ["pytest", "-v", "-m", "e2e", "--timeout=60", "tests/test_e2e_smoke.py"], check=False
+    )
+
+    if result.returncode != 0:
+        print("❌ Smoke tests failed!", file=sys.stderr)
+        return result.returncode
+
+    print("✅ All smoke tests passed!")
+    return 0
+
+
 if __name__ == "__main__":
     sys.exit(check_all())

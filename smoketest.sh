@@ -2,17 +2,24 @@
 
 set -e
 
+echo "========================================"
+echo "DEPRECATED: smoketest.sh is deprecated"
+echo "Use: poetry run smoke-tests instead"
+echo "========================================"
+echo ""
+
 echo "Cleaning dist/..."
 rm -rf dist/
 
 echo "Building..."
 poetry build
 
-echo "Running tests..."
+echo "Running new Python-based smoke tests..."
+poetry run smoke-tests
 
-#TODO parse output and `exit 1` if unexpected.
-poetry run kreatisite help
-poetry run kreatisite check-domain example.com
-poetry run kreatisite register-domain example.com
-
-echo "Done!"
+echo ""
+echo "========================================"
+echo "Migration complete! Consider using:"
+echo "  poetry run smoke-tests"
+echo "  poetry run pytest -m e2e -v"
+echo "========================================"

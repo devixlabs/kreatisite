@@ -33,6 +33,7 @@ lint = "kreatisite.scripts:lint"
 test = "kreatisite.scripts:test"
 check = "kreatisite.scripts:check_all"
 setup-hooks = "kreatisite.scripts:setup_hooks"
+smoke-tests = "kreatisite.scripts:run_smoke_tests"
 
 [tool.black]
 line-length = 100

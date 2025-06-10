@@ -88,6 +88,14 @@ poetry run pytest tests/test_cli.py
 
 # Run tests with coverage
 poetry run pytest --cov=kreatisite
+
+# Run tests by category
+poetry run pytest -m unit          # Unit tests only (fast, mocked)
+poetry run pytest -m integration   # Integration tests only (installed package)
+poetry run pytest -m e2e          # End-to-end tests only (real AWS calls)
+
+# Exclude specific test categories
+poetry run pytest -m "not e2e"    # All tests except E2E tests
 ```
 
 ## Build

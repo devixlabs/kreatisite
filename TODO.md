@@ -72,11 +72,11 @@ This document outlines the plan to improve E2E/smoke testing for the kreatisite 
   - [x] Test network failure scenarios
 
 ### Phase 3: Implement Integration Tests
-- [ ] Create `tests/test_cli_integration.py` using pytest-console-scripts
-  - [ ] Test installed package behavior
-  - [ ] Test with various Python versions
-  - [ ] Test configuration file handling
-  - [ ] Test error messages and help output
+- [x] Create `tests/test_cli_integration.py` using pytest-console-scripts
+  - [x] Test installed package behavior
+  - [x] Test with various Python versions
+  - [x] Test configuration file handling
+  - [x] Test error messages and help output
 
 ### Phase 4: Implement E2E Smoke Tests
 - [ ] Create `tests/test_e2e_smoke.py` to replace smoketest.sh

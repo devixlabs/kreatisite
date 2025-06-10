@@ -14,6 +14,13 @@ poetry run pre-commit run --all-files || {
 }
 echo "✅ Code quality checks passed!"
 
+echo ""
+find . -type f -name "*.sh" -exec shellcheck {} + || {
+    echo "❌ shellcheck failed. Please fix issues before building."; 
+    exit 1;
+}
+echo "✅ shellcheck passed!"
+
 # Run comprehensive test suite (unit, integration, e2e with coverage)
 echo ""
 echo "📋 Stage 2: Comprehensive Test Suite"

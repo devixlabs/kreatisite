@@ -100,7 +100,7 @@ poetry run pytest -m "not e2e"    # All tests except E2E tests
 
 ### Smoke Testing
 
-The project includes comprehensive E2E smoke tests that replace the old `smoketest.sh` script with proper assertions and error handling:
+The project includes comprehensive E2E smoke tests with proper assertions and error handling:
 
 ```bash
 # Run smoke tests (requires AWS credentials for full testing)
@@ -143,7 +143,7 @@ The project includes a pre-build script that runs all checks before building:
 
 This will:
 1. Run pre-commit hooks on all files
-2. Run tests and additional checks
+2. Run comprehensive test suite (unit + integration + E2E smoke tests)
 3. Build the package if all checks pass
 
 ## Pre-commit Hooks

@@ -1,4 +1,4 @@
-"""E2E smoke tests for Kreatisite CLI - replaces smoketest.sh with proper assertions."""
+"""E2E smoke tests for Kreatisite CLI with proper assertions."""
 
 import os
 import subprocess

@@ -1,23 +1,43 @@
 #!/bin/bash
 set -e
 
-echo "Running pre-build checks..."
+echo "🚀 Kreatisite Pre-Build Pipeline (Phase 5: CI/CD Integration)"
+echo "============================================================="
 
 # Run pre-commit checks on all files (includes Black, isort, flake8, mypy, etc.)
-echo "Running pre-commit checks..."
-poetry run pre-commit run --all-files || { echo "Pre-commit checks failed. Please fix issues before building."; exit 1; }
+echo ""
+echo "📋 Stage 1: Code Quality Checks (pre-commit hooks)"
+echo "---------------------------------------------------"
+poetry run pre-commit run --all-files || { 
+    echo "❌ Pre-commit checks failed. Please fix issues before building."; 
+    exit 1; 
+}
+echo "✅ Code quality checks passed!"
 
-# Run additional checks
-echo "Running additional checks..."
-poetry run check || { echo "Checks failed. Please fix issues before building."; exit 1; }
+# Run comprehensive test suite (unit, integration, e2e with coverage)
+echo ""
+echo "📋 Stage 2: Comprehensive Test Suite"
+echo "------------------------------------"
+poetry run comprehensive-tests || { 
+    echo "❌ Comprehensive tests failed. Please fix issues before building."; 
+    exit 1; 
+}
 
-# Run smoke tests if enabled
-if [ "${SKIP_SMOKE_TESTS}" != "1" ]; then
-    echo "Running smoke tests..."
-    poetry run smoke-tests || { echo "Smoke tests failed. Please fix issues before building."; exit 1; }
-else
-    echo "Skipping smoke tests (SKIP_SMOKE_TESTS=1)..."
-fi
+echo ""
+echo "📋 Stage 3: Package Build"
+echo "-------------------------"
+echo "Building package..."
+poetry build || {
+    echo "❌ Package build failed.";
+    exit 1;
+}
 
-echo "All checks passed! Building package..."
-poetry build
+echo ""
+echo "============================================================="
+echo "✅ PRE-BUILD PIPELINE COMPLETED SUCCESSFULLY!"
+echo "   - Code Quality: ✅ (Black, isort, flake8, mypy)"
+echo "   - Unit Tests: ✅ (with 80% coverage requirement)"
+echo "   - Integration Tests: ✅"
+echo "   - E2E Smoke Tests: ✅"
+echo "   - Package Build: ✅"
+echo "============================================================="

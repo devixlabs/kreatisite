@@ -36,23 +36,122 @@ def test() -> int:
     return 0
 
 
+def run_unit_tests() -> int:
+    """Run unit tests with coverage reporting.
+
+    Returns:
+        int: 0 if tests pass, 1 if they fail
+    """
+    print("🧪 Running Unit Tests (fast, mocked)...")
+    print("=" * 50)
+
+    # Run unit tests with coverage
+    result = subprocess.run(
+        [
+            "pytest",
+            "-v",
+            "-m",
+            "unit",
+            "--cov=kreatisite",
+            "--cov-report=term-missing",
+            "--cov-fail-under=80",
+        ],
+        check=False,
+    )
+
+    if result.returncode != 0:
+        print("❌ Unit tests failed!", file=sys.stderr)
+        return result.returncode
+
+    print("✅ Unit tests passed!")
+    return 0
+
+
+def run_integration_tests() -> int:
+    """Run integration tests.
+
+    Returns:
+        int: 0 if tests pass, 1 if they fail
+    """
+    print("🔗 Running Integration Tests (installed package)...")
+    print("=" * 50)
+
+    # Run integration tests
+    result = subprocess.run(["pytest", "-v", "-m", "integration"], check=False)
+
+    if result.returncode != 0:
+        print("❌ Integration tests failed!", file=sys.stderr)
+        return result.returncode
+
+    print("✅ Integration tests passed!")
+    return 0
+
+
+def run_comprehensive_tests() -> int:
+    """Run comprehensive test suite: unit, integration, and e2e tests.
+
+    Returns:
+        int: 0 if all tests pass, non-zero if any test fails
+    """
+    print("🚀 Running Comprehensive Test Suite...")
+    print("=" * 60)
+
+    # Phase 1: Unit Tests with Coverage
+    print("\n📋 Phase 1: Unit Tests with Coverage Requirements")
+    unit_result = run_unit_tests()
+    if unit_result != 0:
+        print("❌ Comprehensive tests failed at Phase 1 (Unit Tests)")
+        return unit_result
+
+    # Phase 2: Integration Tests
+    print("\n📋 Phase 2: Integration Tests")
+    integration_result = run_integration_tests()
+    if integration_result != 0:
+        print("❌ Comprehensive tests failed at Phase 2 (Integration Tests)")
+        return integration_result
+
+    # Phase 3: E2E Smoke Tests
+    print("\n📋 Phase 3: E2E Smoke Tests")
+    e2e_result = run_smoke_tests()
+    if e2e_result != 0:
+        print("❌ Comprehensive tests failed at Phase 3 (E2E Tests)")
+        return e2e_result
+
+    print("\n" + "=" * 60)
+    print("✅ ALL COMPREHENSIVE TESTS PASSED!")
+    print("   - Unit Tests: ✅ (with 80% coverage requirement)")
+    print("   - Integration Tests: ✅")
+    print("   - E2E Smoke Tests: ✅")
+    print("=" * 60)
+    return 0
+
+
 def check_all() -> int:
     """Run all checks (linting, type checking, tests, etc.).
 
     Returns:
         int: 0 if all checks pass, non-zero if any check fails
     """
-    print("Running all checks...")
+    print("🔍 Running All Checks...")
+    print("=" * 60)
+
     # Run linting
+    print("\n📋 Step 1: Linting")
     lint_result = lint()
     if lint_result != 0:
         return lint_result
-    # Run tests
-    print()  # Empty line for better output formatting
-    test_result = test()
+
+    # Run comprehensive tests (unit, integration, e2e)
+    print("\n📋 Step 2: Comprehensive Test Suite")
+    test_result = run_comprehensive_tests()
     if test_result != 0:
         return test_result
-    print("All checks passed!")
+
+    print("\n" + "=" * 60)
+    print("✅ ALL CHECKS PASSED!")
+    print("   - Linting: ✅")
+    print("   - Comprehensive Tests: ✅")
+    print("=" * 60)
     return 0
 
 

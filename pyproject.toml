@@ -31,6 +31,9 @@ build-backend = "poetry.core.masonry.api"
 kreatisite = "kreatisite.cli:main"
 lint = "kreatisite.scripts:lint"
 test = "kreatisite.scripts:test"
+unit-tests = "kreatisite.scripts:run_unit_tests"
+integration-tests = "kreatisite.scripts:run_integration_tests"
+comprehensive-tests = "kreatisite.scripts:run_comprehensive_tests"
 check = "kreatisite.scripts:check_all"
 setup-hooks = "kreatisite.scripts:setup_hooks"
 smoke-tests = "kreatisite.scripts:run_smoke_tests"
@@ -49,4 +52,24 @@ markers = [
     "unit: Unit tests (fast, mocked)",
     "integration: Integration tests (installed package)",
     "e2e: End-to-end tests (real AWS calls)",
+]
+
+[tool.coverage.run]
+source = ["kreatisite"]
+omit = [
+    "kreatisite/scripts.py",  # Entry point scripts - tested indirectly
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "if settings.DEBUG",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+    "class .*\\bProtocol\\):",
+    "@(abc\\.)?abstractmethod",
 ]

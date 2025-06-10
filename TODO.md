@@ -3,7 +3,7 @@
 ## Overview
 This document outlines the plan to improve E2E/smoke testing for the kreatisite CLI tool, replacing the basic `smoketest.sh` with a comprehensive Python-based testing solution.
 
-**Status**: Phases 1-4 completed (81 tests total, comprehensive coverage). Phase 5 remains for future CI/CD implementation.
+**Status**: Phases 1-5 completed ✅ (81 tests total, comprehensive CI/CD pipeline implemented).
 
 ## Current Issues with smoketest.sh
 - No actual assertions on command output
@@ -92,21 +92,19 @@ This document outlines the plan to improve E2E/smoke testing for the kreatisite 
 - [x] Update `smoketest.sh` with deprecation notice
 - [x] Update `README.md` with smoke test documentation
 
-### Phase 5: CI/CD Integration
-- [ ] Add test stages to CI pipeline:
-  ```yaml
-  - name: Unit Tests
-    run: poetry run pytest -m unit --cov=kreatisite
-
-  - name: Integration Tests
-    run: poetry run pytest -m integration
-
-  - name: E2E Smoke Tests (optional)
-    run: poetry run pytest -m e2e
-    if: github.event_name == 'release'
-  ```
-- [ ] Set coverage requirements (e.g., 80% minimum)
-- [ ] Add test result reporting
+### Phase 5: CI/CD Integration ✅ COMPLETED
+- [x] Enhanced prebuild.sh with comprehensive 3-stage CI/CD pipeline:
+  - Stage 1: Code Quality Checks (pre-commit hooks: Black, isort, flake8, mypy)
+  - Stage 2: Comprehensive Test Suite (unit → integration → e2e)
+  - Stage 3: Package Build
+- [x] Set coverage requirements (80% minimum enforced)
+- [x] Add test result reporting with detailed output formatting
+- [x] Created new Poetry script entry points:
+  - `poetry run unit-tests` - Unit tests with 80% coverage requirement
+  - `poetry run integration-tests` - Integration tests 
+  - `poetry run comprehensive-tests` - Full test suite
+- [x] Added GitHub Actions template (.github-actions-template.yml)
+- [x] Updated CLAUDE.md with comprehensive testing documentation
 
 ## Example Test Implementations
 
